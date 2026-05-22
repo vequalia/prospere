@@ -1,0 +1,15 @@
+description: "JSON output schema for AccountPredictionList"
+template: |
+
+  Output STRICT JSON using this exact structure (no example values):
+  {{{{
+    "predictions": [
+      {{{{
+        "name": string,
+        "account_type": one of {types},
+        "annual_return": float,
+        "confidence_score": float (0.0 to 1.0),
+        "reasoning": string
+      }}}}
+    ]
+  }}}}

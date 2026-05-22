@@ -1,0 +1,46 @@
+description: "Parse user's natural language into structured optimization intent — systematic reasoning"
+template: |
+  Parse the user's optimization request into structured JSON using a systematic
+  protocol.
+
+  USER QUERY: {user_query}
+
+  --- SYSTEMATIC PARSING PROTOCOL ---
+
+  STEP 1 — INTENT CLASSIFICATION
+  Read the user's query and classify it into exactly one of three intents:
+
+  a) what_if — the user is proposing a CHANGE:
+     - Explicit adjustment language: "reduce", "cut", "increase", "add", "调整", "减少"
+     - Specific categories mentioned with or without amounts
+     - Scenario exploration: "what if I...", "如果..."
+
+  b) efficient_frontier — the user is stating a GOAL:
+     - Wealth target: "I want €X", "reach X by...", "目标X"
+     - QoL constraint: "without sacrificing too much", "生活品质"
+     - Optimization request: "optimize my budget", "find the best allocation"
+
+  c) general_question — everything else:
+     - Analysis questions, capability inquiries, greetings, vague statements
+
+  STEP 2 — QUANTITATIVE EXTRACTION
+  Scan for numeric values:
+  - Percentages: "X%", "X percent", "一半" → percentage
+  - Absolute amounts: currency symbol + number → absolute
+  - Direction words: "reduce", "cut", "减" → negative; "increase", "add", "加" → positive
+  - Wealth targets: strip currency symbols, extract as plain number
+  - QoL tolerances: extract percentage
+
+  STEP 3 — CATEGORY MATCHING
+  When the user mentions a category:
+  1. Search the profile for semantic matches — same concept, different words
+  2. Identify parent category and (if applicable) subcategory
+  3. Set matched_category to the EXACT profile category name
+  4. Set subcategory_name to the EXACT profile subcategory name, or null
+
+  STEP 4 — FIELD ASSEMBLY
+  Use the schema's exact field names — no invention or alternative naming.
+
+  STEP 5 — SELF-VERIFICATION
+  Verify intent_type, extracted numbers, and category names before output.
+  {output_schema}

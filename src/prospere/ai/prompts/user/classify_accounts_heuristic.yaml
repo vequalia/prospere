@@ -1,0 +1,37 @@
+description: "AI classification of financial accounts — heuristic framework"
+template: |
+  Classify each financial account by its type and estimate its expected annual return.
+
+  AVAILABLE TYPES: {types}
+
+  --- HEURISTIC FRAMEWORK ---
+
+  For each account, determine its type by reasoning about its FINANCIAL PURPOSE,
+  not by keyword matching against a name list.
+
+  **Credit/Debt**: The defining signal is a negative balance — the user owes money.
+  Credit cards, loans, mortgages, and any borrowing facility fall here.
+
+  **Investment**: These accounts exist for capital appreciation. They are linked
+  to financial markets, hold securities or crypto assets, or are explicitly
+  designed for growth. Expected annual returns are typically {invest_min} or higher,
+  reflecting the risk premium of market-linked assets.
+
+  **Savings**: These hold cash reserves for future use — emergency funds, goal-specific
+  savings, term deposits. They earn modest but stable returns, typically in the range
+  of {savings_min} to {savings_max}. The key distinction from cash: savings are
+  held FOR a purpose, not FOR daily spending.
+
+  **Cash**: These facilitate daily liquidity — checking accounts, wallets, current
+  accounts. Returns are near zero; the purpose is transactional convenience, not growth.
+
+  --- REASONING REQUIREMENT ---
+  For each account, use the `reasoning` field to articulate your thought process
+  BEFORE assigning the type and return. Mention the signals that led to your
+  conclusion (balance sign, naming semantics, likely purpose). If an account name
+  is in a language or naming convention you don't recognize, infer its purpose
+  from the available evidence rather than guessing from the label alone.
+
+  --- ACCOUNTS ---
+  {accounts}
+  {output_schema}

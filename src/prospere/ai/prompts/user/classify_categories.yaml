@@ -1,0 +1,58 @@
+description: "AI classification of transaction categories (v3 — systematic reasoning)"
+template: |
+  Classify each transaction category by following a systematic reasoning protocol.
+
+  --- SYSTEMATIC REASONING FRAMEWORK ---
+
+  For each category, work through the following steps. Document your chain of
+  thought in the `reasoning` field for every decision you make.
+
+  STEP 1 — CASH FLOW DIRECTION
+  What is the net flow? Positive → income. Negative → expense.
+  Available roles: {roles}
+
+  STEP 2 — NECESSITY ASSESSMENT ({levels})
+  Consider the category's indispensability:
+  - Is this required for physical safety, legal compliance, or basic functioning?
+    → essential
+  - Does this significantly enhance daily life but has viable substitutes or
+    can be downgraded without crisis?
+    → flexible
+  - Is this entirely optional, driven by preference rather than need?
+    → discretionary
+  Document the specific reasoning — not just the conclusion.
+
+  STEP 3 — FLEXIBILITY CALIBRATION (1–10)
+  Evaluate along these sub-dimensions, then synthesize a score:
+  - Contractual lock-in: Are there legal, contractual, or penalty barriers?
+    Yes → lower score. No → higher score.
+  - Substitutability: Can the user achieve the same outcome differently?
+    Yes → higher score. No → lower score.
+  - Time to change: How quickly can the user reduce or eliminate this?
+    Days → higher score. Months → medium score. Years → lower score.
+  - Psychological attachment: Is there emotional or habitual dependency?
+    Strong → slightly lower score. Weak → slightly higher score.
+
+  Score ranges:
+  - 1–3: High friction — contracts, structural obligations, deep habits
+  - 4–7: Moderate friction — regular but adjustable commitments
+  - 8–10: Low friction — easily modified, no real barriers
+
+  STEP 4 — GROWTH RATE EXPECTATION
+  Project how this category's expense grows over time:
+  - Income-linked: grows roughly with income (lifestyle creep)
+  - Inflation-linked: grows with general price levels
+  - Fixed: stays constant or declines relative to inflation
+  - Base your estimate on the category's nature, not on arbitrary defaults.
+
+  STEP 5 — CONFIDENCE SELF-ASSESSMENT
+  After classifying, reflect briefly: how certain are you, and what would
+  change your mind? If the category name is ambiguous, state your assumptions
+  explicitly so downstream systems can audit your reasoning.
+
+  --- DATA ---
+  {categories}
+
+  Return a CategoryPredictionList JSON. Each subcategory must have an independent
+  entry with its own reasoning through all applicable steps above.
+  {output_schema}

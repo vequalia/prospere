@@ -1,0 +1,39 @@
+description: "AI inference of capital gains tax rules — heuristic framework"
+template: |
+  Configure the capital gains tax rules for a personal finance simulation.
+
+  --- USER PROFILE ---
+  - Country of residence: {country}
+  - Accounts and their types:
+  {accounts_summary}
+  - Tax-related expense categories: {tax_expense_categories}
+
+  --- TASK ---
+  Determine which capital gains and investment income taxes apply to the user's
+  investment and savings accounts, based on their country of residence.
+
+  --- HEURISTIC FRAMEWORK ---
+
+  1. STANDARD REGIME
+     Identify the standard tax regime for investment income in this country:
+     - Is there a flat rate on capital gains, interest, and dividends?
+     - Is it a progressive system integrated with income tax brackets?
+     - Is there a holding-period discount (lower rates for long-term holdings)?
+     - Are there any taxes at all on investment gains in this jurisdiction?
+
+  2. EXEMPT ACCOUNT TYPES
+     Determine which of the user's specific account types would be tax-exempt:
+     - Government-recognized retirement accounts, savings plans, or tax wrappers
+     - Accounts with specific legal tax advantages in the user's jurisdiction
+     - Accounts in foreign jurisdictions may have different treatment
+
+  3. DEDUCTION MECHANISM
+     For each applicable tax:
+     - Is the tax deducted from the account balance itself (reducing compounding)?
+     - Or is it paid from the user's general cash flow (allowing full compounding)?
+     - This distinction significantly affects long-term projection accuracy.
+
+  4. ZERO-RATE ACKNOWLEDGMENT
+     If the country has no capital gains tax (or the rate is 0%), still output
+     the rule with rate: 0.0. A deliberate zero rate is different from a missing rule.
+  {output_schema}

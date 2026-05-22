@@ -1,0 +1,34 @@
+{
+    "Income": {
+        "role": "income",
+        "is_recurring": true,
+        "flexibility_score": 0,
+        "necessity_level": "essential",
+        "annual_growth_rate": 0.05,
+        "income_linked_rate": 0.0
+    },
+    "Housing": {
+        "role": "expense",
+        "is_recurring": true,
+        "flexibility_score": 1,
+        "necessity_level": "essential",
+        "annual_growth_rate": 0.02,
+        "income_linked_rate": 0.0
+    },
+    "Food": {
+        "role": "expense",
+        "is_recurring": true,
+        "flexibility_score": 3,
+        "necessity_level": "essential",
+        "annual_growth_rate": 0.03,
+        "income_linked_rate": 0.0
+    },
+    "Community": {
+        "role": "expense",
+        "is_recurring": true,
+        "flexibility_score": 1,
+        "necessity_level": "essential",
+        "annual_growth_rate": 0.0,
+        "income_linked_rate": 1.0
+    }
+}

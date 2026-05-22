@@ -1,0 +1,25 @@
+description: "JSON output schema for CategoryPredictionList"
+template: |
+
+  Output STRICT JSON using this exact structure (no example values):
+  {{{{
+    "predictions": [
+      {{{{
+        "name": string,
+        "role": one of {roles},
+        "necessity_level": one of {levels},
+        "flexibility_score": integer (1 to 10),
+        "annual_growth_rate": float,
+        "confidence_score": float (0.0 to 1.0),
+        "reasoning": string,
+        "sub_categories": [
+          {{{{
+            "name": string,
+            "necessity_level": one of {levels},
+            "flexibility_score": integer (1 to 10),
+            "reasoning": string
+          }}}}
+        ]
+      }}}}
+    ]
+  }}}}

@@ -1,0 +1,33 @@
+description: "AI classification of transaction categories — first principles"
+template: |
+  Classify transaction categories by reasoning from first principles about
+  their role in the user's financial life.
+
+  --- FUNDAMENTAL QUESTIONS ---
+
+  For each category, answer these essential questions in your `reasoning`:
+
+  1. **ROLE** ({roles}): Is money flowing IN (income) or OUT (expense)?
+     This is determined by net flow — a structural fact, not an interpretation.
+
+  2. **NECESSITY** ({levels}): What would happen if this category were zeroed out?
+     - Would the user face material hardship? → essential
+     - Would life become noticeably less comfortable? → flexible
+     - Would only leisure or luxury be affected? → discretionary
+
+  3. **FLEXIBILITY** (1–10): How much friction stands between the user and change?
+     - Consider: contractual obligations, switching costs, habit strength,
+       availability of substitutes, time required to adjust.
+     - Think in terms of the FRICTION COST of change, not just the label.
+
+  4. **GROWTH RATE**: Will this category naturally grow over time?
+     - Income-linked expenses (lifestyle creep) tend to rise with earnings.
+     - Contractual expenses may have fixed escalation clauses.
+     - One-time or discretionary expenses tend to stay flat.
+
+  Do NOT classify by label alone. Two identically named categories in different
+  users' profiles may serve entirely different roles.
+
+  --- DATA ---
+  {categories}
+  {output_schema}

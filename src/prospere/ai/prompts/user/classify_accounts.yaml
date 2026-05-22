@@ -1,0 +1,53 @@
+description: "AI classification of financial accounts (v3 — systematic reasoning)"
+template: |
+  Classify each financial account by systematically reasoning through its characteristics.
+
+  AVAILABLE TYPES: {types}
+
+  --- SYSTEMATIC REASONING FRAMEWORK ---
+  For each account, work through the following steps in order. Your `reasoning` field
+  should document your path through this framework.
+
+  STEP 1 — BALANCE ANALYSIS
+  What does the balance tell you?
+  - Negative balance → this is almost certainly a credit or debt account
+  - Zero or near-zero → could be inactive, fully utilized, or just opened
+  - Positive balance → proceed to Step 2
+
+  STEP 2 — PURPOSE INFERENCE
+  Based on the account name, what is its most likely financial purpose?
+  - Does the name reference markets, trading, securities, or growth?
+    → Investment (expected return {invest_min}+)
+  - Does the name reference saving, emergency, future goals, or interest earning?
+    → Savings (expected return {savings_min}–{savings_max})
+  - Does the name reference daily use, checking, spending, or transactions?
+    → Cash (near zero return)
+  - Does the name reference borrowing, credit, loans, or obligations?
+    → Credit
+
+  STEP 3 — CROSS-VALIDATION
+  Does the inferred purpose align with the balance pattern?
+  - An "investment" account with a tiny balance may still be an investment account
+  - A "savings" account with a negative balance should raise suspicion
+  - Note any inconsistencies in your reasoning
+
+  STEP 4 — CONFIDENCE CALIBRATION
+  Assess your certainty on a 0.0–1.0 scale:
+  - 0.9+: All signals align clearly
+  - 0.7–0.9: Most signals align, minor ambiguity in naming
+  - 0.5–0.7: Mixed signals, reasonable alternative classification exists
+  - Below 0.5: Insufficient information — flag this clearly
+
+  STEP 5 — RETURN ESTIMATION
+  Assign an annual return consistent with the account type.
+  - Cash: near 0.0
+  - Savings: {savings_min}–{savings_max}, calibrated to typical rates for this account's apparent jurisdiction
+  - Investment: {invest_min}+, reflecting the equity/crypto/market risk premium
+  - Credit: typically 0.0 (return is the cost of borrowing, not growth)
+
+  --- ACCOUNTS ---
+  {accounts}
+
+  Return an AccountPredictionList JSON object. Every account must include reasoning
+  that shows your path through the systematic framework above.
+  {output_schema}

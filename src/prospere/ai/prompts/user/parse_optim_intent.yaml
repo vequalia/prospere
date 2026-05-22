@@ -1,0 +1,42 @@
+description: "Parse user's natural language into a structured optimization intent (v2 — first principles)"
+template: |
+  Parse the user's optimization request into structured JSON.
+
+  USER QUERY: {user_query}
+
+  --- FIRST PRINCIPLES ---
+
+  1. INTENT RECOGNITION
+     A user's financial request has one of three fundamental shapes:
+     - **Adjustment**: "Change X by Y" → this is a what_if scenario
+     - **Goal**: "I want to achieve Z" → this is an efficient_frontier search
+     - **Question**: "What is..." or "Can you..." or "Hello" → general conversation
+
+     Don't force an intent type. If the user is exploring or greeting, classify
+     as general_question and let the conversation flow naturally.
+
+  2. SEMANTIC CATEGORY MATCHING
+     The user does not know their profile's exact category names. They speak
+     in their own vocabulary. Your role is to bridge:
+     - Map user descriptions to profile entries by MEANING, not string similarity
+     - Consider the hierarchical structure: some categories have parent-child
+       relationships via subcategories
+     - When the user targets a specific item, match to subcategory level
+     - When the user targets a broad area, match to category level
+     - matched_category must be an exact string from the profile
+
+  3. QUANTITATIVE EXTRACTION
+     - Percentages: "reduce by 20%", "cut in half" → adjustment_type: "percentage",
+       adjustment_value: the number (negative for reductions)
+     - Absolute amounts: "cut €200", "add 500" → adjustment_type: "absolute",
+       adjustment_value: the number
+     - Wealth targets: extract as a plain number, not text
+     - QoL budgets: percentage of lifestyle loss the user is willing to accept
+     - If no quantity is specified, the engine will ask for clarification
+
+  4. LANGUAGE
+     Detect from the query text. Chinese → "zh", otherwise → "en".
+
+  Return an OptimIntent JSON object. Match the field names exactly as defined
+  in the schema — no invented or alternative field names.
+  {output_schema}

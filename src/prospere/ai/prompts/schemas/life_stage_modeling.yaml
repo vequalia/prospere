@@ -1,0 +1,18 @@
+description: "JSON output schema for LifeStageModeling"
+template: |
+
+  Output STRICT JSON using this exact structure (no example values):
+  {{{{
+    "life_stage": string,
+    "income_growth": {{{{
+      "initial_rate": float,
+      "terminal_rate": float,
+      "transition_years": integer
+    }}}},
+    "expense_growth": {{{{
+      "initial_rate": float,
+      "terminal_rate": float,
+      "transition_years": integer
+    }}}},
+    "reasoning": string
+  }}}}

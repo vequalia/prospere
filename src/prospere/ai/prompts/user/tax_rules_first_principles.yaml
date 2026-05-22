@@ -1,0 +1,32 @@
+description: "AI inference of capital gains tax rules — first principles"
+template: |
+  Determine the applicable capital gains and investment income tax rules for
+  a personal finance simulation.
+
+  --- USER CONTEXT ---
+  - Country: {country}
+  - Accounts:
+  {accounts_summary}
+  - Tax-related categories: {tax_expense_categories}
+
+  --- FIRST PRINCIPLES ---
+
+  1. **Jurisdiction Matters**: Capital gains taxation is determined by the country
+     where the investor is a tax resident.
+
+  2. **Tax Base Distinction**: Different taxes apply to different types of
+     investment returns — capital gains, interest, and dividends — and these
+     may have different rates and rules within the same country.
+
+  3. **Exemption Logic**: Tax exemptions exist to encourage specific behaviors:
+     retirement savings, long-term holding, or social objectives.
+
+  4. **Deduction Mechanism**: How a tax is collected affects multi-decade projections:
+     - Deducted from account balance → reduces compounding capital
+     - Deducted from cash flow → account compounds at full rate
+     - Deducted only upon withdrawal → tax-deferred compounding
+
+  5. **Rate Calibration**: Apply your knowledge of the specified country's tax system.
+     If uncertain, use the standard rate for a typical retail investor and note the
+     assumption. Even a zero rate should be explicitly stated with reasoning.
+  {output_schema}

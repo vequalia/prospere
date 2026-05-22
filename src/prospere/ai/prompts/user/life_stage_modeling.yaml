@@ -1,0 +1,65 @@
+description: "AI inference of life stage and growth curves (v3 — systematic reasoning)"
+template: |
+  Perform a structured behavioral economics analysis to infer the user's life
+  stage and project growth trajectories.
+
+  --- USER PROFILE ---
+  - Income: {income_avg:.2f}/mo (Stability: {income_stability})
+  - Expense: {expense_avg:.2f}/mo (Flexibility: {expense_flexibility:.1f}/10)
+  {context}
+
+  --- SYSTEMATIC REASONING PROTOCOL ---
+
+  STEP 1 — LIFE STAGE DIAGNOSIS
+  Position the user on the career life-cycle. Consider these signals:
+  - Absolute income level relative to economy-wide norms
+  - Income stability: stable → established career; volatile → entrepreneurial, gig, or transitional
+  - Expense-to-income ratio: low ratio → accumulation phase; high ratio → peak consumption or distress
+  - Background context: age, industry, family status, career level if provided
+  - Synthesize these into a concise life_stage label and explain your synthesis in reasoning.
+
+  STEP 2 — INCOME GROWTH FORECAST
+  Derive the three parameters of the dynamic growth curve:
+
+  a) **initial_rate**: What is the user's CURRENT annual income growth trajectory?
+     Consider: career momentum, industry trends, recent stability patterns.
+     - Strong upward signals (early career, growing industry, recent promotions) → higher rate
+     - Plateau signals (mid-career, stable income, mature industry) → moderate rate
+     - Deceleration signals (late career, declining industry, approaching retirement) → lower rate
+
+  b) **terminal_rate**: What growth rate will the user converge to over the long run?
+     This should reflect sustainable real wage growth — typically a modest rate
+     that accounts for the user's economy and profession.
+
+  c) **transition_years**: Over what period will the growth rate transition from
+     initial to terminal? This is a function of how far the user is from their
+     career peak. More remaining career runway → longer transition.
+
+  STEP 3 — EXPENSE GROWTH MODELING
+  Lifecycle consumption theory tells us:
+
+  a) **Lifestyle creep rate**: How much of each income gain translates to spending?
+     - High flexibility score → the user can decouple spending from income growth
+     - Low flexibility score → spending may already be locked into income-linked patterns
+     - High expense-to-income ratio → less room for creep (already at ceiling)
+     - Low expense-to-income ratio → more room for lifestyle expansion
+
+  b) **Expense initial_rate** should be calibrated as a proportion of income
+     initial_rate, considering the factors above.
+
+  c) **Expense terminal_rate**: Long-run expense growth should converge to the
+     long-run inflation rate, adjusted for lifestyle preferences.
+
+  d) **Expense transition_years**: Typically somewhat shorter than income transition,
+     as spending habits adjust faster than career trajectories.
+
+  STEP 4 — CONSISTENCY CHECK
+  Before finalizing, verify internal consistency:
+  - Does the income-to-expense ratio at the terminal state make economic sense?
+  - Is the implied savings rate (income minus expense) sustainable?
+  - Would a reasonable financial planner agree with the trajectory?
+
+  Document your full analysis in the `reasoning` field, step by step.
+
+  Return a LifeStageModeling JSON object.
+  {output_schema}

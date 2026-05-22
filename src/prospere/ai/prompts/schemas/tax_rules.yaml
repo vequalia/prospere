@@ -1,0 +1,19 @@
+description: "JSON output schema for TaxRulesConfig"
+template: |
+
+  Output STRICT JSON using this exact structure (no example values):
+  {{{{
+    "country": string,
+    "tax_regime_summary": string,
+    "rules": [
+      {{{{
+        "name": string,
+        "base": one of "capital_gains" | "interest_earned" | "salary_income",
+        "rate": float (0.0 to 1.0),
+        "exempt_accounts": [string],
+        "deduct_from": one of "account" | "cash_flow",
+        "apply_only_to_positive": boolean
+      }}}}
+    ],
+    "reasoning": string
+  }}}}

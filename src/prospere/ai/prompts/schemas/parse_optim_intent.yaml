@@ -1,0 +1,24 @@
+description: "JSON output schema for OptimIntent"
+template: |
+
+  Output STRICT JSON using this exact schema (no invented field names):
+  {{{{
+    "intent_type": "what_if" | "efficient_frontier" | "general_question",
+    "reasoning": string,
+    "language": "zh" | "en",
+    "adjustments": [
+      {{{{
+        "user_category_name": string,
+        "matched_category": string,
+        "subcategory_name": string or null,
+        "adjustment_type": "percentage" | "absolute",
+        "adjustment_value": number,
+        "duration": integer or null
+      }}}}
+    ],
+    "target_wealth": number or null,
+    "max_qol_loss": number or null,
+    "strategy_preference": "optimal" | "balanced" | "aggressive" or null,
+    "time_extension": integer or null,
+    "question_text": string
+  }}}}

@@ -1,0 +1,8 @@
+description: "JSON output schema for PayrollTaxEstimate"
+template: |
+
+  Output STRICT JSON using this exact structure (no example values):
+  {{{{
+    "estimated_rate": float (0.0 to 1.0),
+    "reasoning": string (brief explanation of how the rate was determined)
+  }}}}

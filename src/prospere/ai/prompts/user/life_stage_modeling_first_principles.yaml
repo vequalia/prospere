@@ -1,0 +1,34 @@
+description: "AI inference of life stage and growth curves — first principles"
+template: |
+  Analyze the user's financial profile to infer their life stage and project
+  dynamic growth curves for income and expenses.
+
+  --- USER DATA ---
+  - Income: {income_avg:.2f}/mo (Stability: {income_stability})
+  - Expense: {expense_avg:.2f}/mo (Flexibility: {expense_flexibility:.1f}/10)
+  {context}
+
+  --- FIRST PRINCIPLES ---
+
+  Life stage and growth are interlinked by a small set of economic fundamentals:
+
+  1. **Earnings Trajectory**: A person's income follows a life-cycle curve — rising
+     through early and mid career, peaking, then plateauing or declining. The shape
+     of this curve depends on their industry, skills, and career stage.
+
+  2. **Consumption Smoothing**: People prefer stable consumption. Early in a career,
+     expenses may outpace income. Later, income surpasses expenses. The gap is the
+     savings rate — the engine of wealth accumulation.
+
+  3. **Lifestyle Creep**: As income grows, expenses tend to follow — but not
+     proportionally. High flexibility suggests conscious spending control; low
+     flexibility suggests entrenched consumption patterns.
+
+  4. **Convergence**: Over long horizons, growth rates converge to economy-wide
+     norms. No one sustains unusually high growth for decades. Model a transition
+     from the current trajectory to a sustainable long-run rate.
+
+  Reason from these fundamentals to derive the life_stage label, income_growth
+  parameters (initial_rate, terminal_rate, transition_years), and expense_growth
+  parameters. Document your logic in the `reasoning` field.
+  {output_schema}

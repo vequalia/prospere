@@ -1,0 +1,34 @@
+description: "Parse user's natural language into structured optimization intent — heuristic framework"
+template: |
+  Parse the user's financial optimization request into structured JSON.
+
+  USER QUERY: {user_query}
+
+  --- HEURISTIC FRAMEWORK ---
+
+  1. DETERMINE INTENT TYPE
+     Classify the user's request into one of three categories:
+     - "what_if": The user wants to see the impact of specific budget changes.
+       They mention concrete categories and adjustment magnitudes.
+     - "efficient_frontier": The user has a wealth goal or QoL budget constraint.
+     - "general_question": Anything else — greeting, capability question, vague
+       exploration, or simulation analysis question.
+
+  2. CATEGORY MATCHING (FOR "what_if" INTENTS)
+     The user describes categories in their own words. Map these to the EXACT
+     category names from their financial profile by semantic meaning, not string match.
+     - For specific items, match to subcategory level with subcategory_name.
+     - For broad areas, match to category level, leave subcategory_name as null.
+     - matched_category must be an exact string from the profile.
+
+  3. ADJUSTMENT VALUE
+     - "percentage" for relative changes, "absolute" for fixed-amount changes.
+     - Negative for cuts, positive for increases. Leave adjustments empty if none.
+
+  4. EFFICIENT FRONTIER PARSING
+     - Extract specific wealth targets as numbers.
+     - Extract QoL loss tolerance as max_qol_loss.
+     - strategy_preference: infer from language ("optimal", "balanced", "aggressive").
+
+  5. LANGUAGE: "zh" for Chinese, "en" otherwise.
+  {output_schema}

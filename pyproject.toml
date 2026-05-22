@@ -1,0 +1,81 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "prospere"
+version = "0.1.0"
+description = "An AI-powered financial forecasting engine for stochastic wealth simulation and budget optimization."
+authors = [{ name = "Vequalia", email = "hello@vequalia.com" }]
+readme = "README.md"
+license = { text = "GPL-3.0-only" }
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Office/Business :: Financial",
+]
+dependencies = [
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.2",
+    "numpy>=2.2.3",
+    "scipy>=1.15.2",
+    "openai>=1.0.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "prophet>=1.1.6",
+    "pyyaml>=6.0.3",
+    "rich>=13.0.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "W", "C90", "N"]
+ignore = []
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["S"]
+"tests/*" = ["S"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+strict_optional = true
+
+[tool.bandit]
+exclude_dirs = ["tests", "features"]
+targets = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.uv]
+package = true
+
+[dependency-groups]
+dev = [
+    "bandit>=1.9.4",
+    "mypy>=1.20.2",
+    "pandas-stubs>=3.0.0.260204",
+    "pre-commit>=4.6.0",
+    "pytest>=8.0.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.11",
+    "types-openpyxl>=3.1.5.20260408",
+]
+
+[project.scripts]
+prospere = "prospere.cli.main:main"

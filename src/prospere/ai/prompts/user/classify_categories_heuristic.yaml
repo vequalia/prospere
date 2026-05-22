@@ -1,0 +1,47 @@
+description: "AI classification of transaction categories — heuristic framework"
+template: |
+  Analyze the user's transaction categories to construct a behavioral financial profile.
+
+  --- HEURISTIC FRAMEWORK ---
+
+  1. ROLE ({roles}):
+     The financial role is determined by the direction of cash flow.
+     - Money coming IN → income
+     - Money going OUT → expense
+     This is a structural fact, not a matter of interpretation.
+
+  2. NECESSITY ({levels}):
+     The necessity of a category reflects how critical it is to the user's basic stability.
+     Ask: "If this category were eliminated entirely, would the user's fundamental
+     wellbeing be threatened?"
+     - **essential**: Survival or basic functioning depends on it. Housing, basic
+       food, minimum utilities, essential healthcare. Removing it would cause
+       material hardship.
+     - **flexible**: Improves quality of life significantly but can be reduced
+       or substituted without crisis.
+     - **discretionary**: Pure wants with no hardship implications. Entertainment,
+       luxury goods, hobbies, travel.
+
+  3. FLEXIBILITY SCORE (1–10):
+     How easily can the user change the level of this expense?
+     - 1–3 (Rigid): Contractual or structural commitments — rent, mortgage, insurance,
+       minimum debt payments. High friction to change.
+     - 4–7 (Adjustable): Regular but not contract-bound — food, transport, personal care.
+       Can be optimized with conscious effort.
+     - 8–10 (Elastic): Discretionary, cancelable on short notice — subscriptions, dining,
+       entertainment, shopping.
+
+  4. AMBIGUITY RULE:
+     If a category name is generic (a retailer, a platform, a vague label), look to
+     its subcategories for behavioral signals. If still ambiguous, default to
+     'flexible' with a flexibility score of 6.
+
+  --- REASONING REQUIREMENT ---
+  For each category (and every subcategory), populate the `reasoning` field to explain
+  your logic BEFORE assigning scores. Reference the specific signals that drove
+  your conclusion.
+
+  --- DATA TO CLASSIFY ---
+  {categories}
+  {output_schema}
+  Every subcategory listed in the data MUST have its own prediction entry.

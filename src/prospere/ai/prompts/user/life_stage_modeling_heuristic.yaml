@@ -1,0 +1,42 @@
+description: "AI inference of life stage and growth curves — heuristic framework"
+template: |
+  Perform a behavioral economics analysis to determine the user's life stage and
+  project their future income and expense growth trajectories.
+
+  --- USER PROFILE ---
+  - Total Monthly Income (Avg): {income_avg:.2f} (Stability: {income_stability})
+  - Total Monthly Expense (Avg): {expense_avg:.2f} (Flexibility: {expense_flexibility:.1f}/10)
+  {context}
+
+  --- HEURISTIC FRAMEWORK ---
+
+  1. LIFE STAGE DIAGNOSIS
+     Infer the user's current life stage from their financial profile and optional
+     background context (age, career, family status if provided). Consider:
+     - Income level relative to typical career earnings curves
+     - Expense-to-income ratio and its implications for savings capacity
+     - Expense flexibility as a proxy for lifestyle entrenchment
+     - Any explicit background signals (industry, family, age bracket)
+
+  2. INCOME GROWTH PROJECTION
+     Model income growth as a two-phase dynamic curve:
+     - **initial_rate**: Near-term annual growth rate (next 1–3 years). This should
+       reflect the user's CURRENT trajectory — higher for early-career with upward
+       momentum, moderate for established earners on a plateau, lower for those near
+       peak or in career transition.
+     - **terminal_rate**: Long-term growth rate once the user reaches their career
+       plateau. Typically converges toward the long-run rate of real wage growth.
+     - **transition_years**: How many years until the growth rate transitions from
+       initial to terminal. Shorter for those near peak, longer for early career.
+
+  3. EXPENSE GROWTH PROJECTION (LIFESTYLE CREEP)
+     - Expense growth tends to follow income growth, but with a lag and at a
+       slightly lower rate — not every raise translates to proportionally higher spending.
+     - The flexibility score is a key signal: high flexibility (8–10) suggests
+       room to control lifestyle creep; low flexibility (1–3) suggests entrenched spending.
+     - Model the initial_rate of expense growth as a fraction of income initial_rate.
+
+  --- REASONING REQUIREMENT ---
+  Use the `reasoning` field to explain your analysis BEFORE providing the numerical
+  values. Discuss the signals you used and any assumptions you made.
+  {output_schema}

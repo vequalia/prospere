@@ -1,0 +1,62 @@
+description: "AI estimation of effective payroll/income tax rate (v3 — systematic reasoning)"
+template: |
+  Perform a systematic analysis to estimate the effective payroll tax rate
+  for a resident earning a salary in the given country.
+
+  --- USER CONTEXT ---
+  - Country: {country}
+  - Monthly gross income (local currency): {monthly_income}
+
+  --- SYSTEMATIC TAX ESTIMATION PROTOCOL ---
+
+  STEP 1 — JURISDICTION IDENTIFICATION
+  Identify the tax jurisdiction. Country of residence determines which tax code
+  applies. Note any special considerations:
+  - Federal vs. regional / municipal tax layers (the country may have multiple
+    levels of income tax)
+  - Whether the country uses a territorial or worldwide tax system
+  - Whether the tax year aligns with calendar year or has a different fiscal year
+
+  STEP 2 — TAX STRUCTURE DECOMPOSITION
+  Decompose the total tax burden into its mandatory components. For the given
+  country and income level, identify and quantify EACH component separately:
+  - National / federal income tax rate (progressive brackets or flat)
+  - Regional / state / municipal income tax (if applicable)
+  - Social security contributions (employee share)
+  - Health insurance contributions (if mandatory and withheld at source)
+  - Unemployment insurance
+  - Pension contributions (mandatory employee share)
+  - Any other mandatory payroll deductions (solidarity surcharges, church tax,
+    long-term care insurance, etc.)
+
+  STEP 3 — EFFECTIVE RATE CALCULATION
+  For the given monthly income, calculate the blended effective rate:
+  - If progressive brackets exist, map the income to each bracket, compute the
+    tax for each slice, and divide total tax by gross income
+  - If flat rate, apply it directly
+  - Add all mandatory contribution rates from Step 2 on top of the income tax
+  - Account for standard allowances and deductions that apply to an average
+    single filer at this income level (personal allowance, basic deduction,
+    earned income credit, etc.)
+  - The result is the EFFECTIVE rate (tax + contributions) / gross income
+
+  STEP 4 — PLAUSIBILITY CHECK
+  Sanity-check the estimated rate:
+  - Is it within the known range for this country? (Cross-reference common
+    knowledge: e.g., 0-5% for Gulf states, 20-40% for Western Europe,
+    30-50% for Nordic countries)
+  - Would the net (take-home) income be a reasonable living amount in this
+    country after tax?
+  - If the rate seems implausible, re-examine Step 2 and Step 3 for errors
+    (e.g., confusing marginal with effective, omitting social contributions)
+
+  STEP 5 — ZERO-RATE HANDLING
+  If the country has no income tax (e.g., UAE, Qatar, Bahamas), the effective
+  rate may still be non-zero due to mandatory social contributions. Always
+  account for those. If all components are genuinely zero, return rate: 0.0
+  with a clear explanation in reasoning. Never guess or default to a non-zero
+  value when no tax exists.
+
+  Return a PayrollTaxEstimate JSON object. Include your structured reasoning
+  referencing the decomposition from Step 2.
+  {output_schema}

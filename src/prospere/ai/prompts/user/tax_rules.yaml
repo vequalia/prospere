@@ -1,0 +1,58 @@
+description: "AI inference of capital gains tax rules (v3 — systematic reasoning)"
+template: |
+  Perform a systematic analysis of the user's capital gains tax exposure.
+
+  --- USER CONTEXT ---
+  - Country: {country}
+  - Accounts:
+  {accounts_summary}
+  - Tax-related categories: {tax_expense_categories}
+
+  --- SYSTEMATIC TAX ANALYSIS PROTOCOL ---
+
+  STEP 1 — JURISDICTION IDENTIFICATION
+  Identify the user's tax jurisdiction. Country of residence determines
+  which tax code applies. Note any special considerations:
+  - Federal vs. regional tax systems (the country may have multiple layers)
+  - Tax treaties that might affect foreign-source investment income
+  - Special economic zones or territorial tax systems
+
+  STEP 2 — INVESTMENT INCOME CLASSIFICATION
+  For the country identified, determine how investment returns are classified:
+  - Capital gains (sale of assets): flat rate, progressive, or exempt?
+  - Interest income (savings, bonds): same rate, different rate, or exempt?
+  - Dividend income: integrated with income tax or separate regime?
+  - Are there allowances, thresholds, or exemptions before tax applies?
+
+  STEP 3 — ACCOUNT-BY-ACCOUNT ASSESSMENT
+  For EACH of the user's accounts, determine whether it is subject to tax:
+  - Identify which tax rules apply to this account type
+  - Check if the account qualifies for any exemption or special treatment
+  - Consider the account type: retirement accounts often have deferred or zero
+    capital gains tax; standard brokerage accounts typically don't
+  - Flag accounts held in foreign jurisdictions for special treatment
+
+  STEP 4 — EXEMPT ACCOUNTS DOCUMENTATION
+  List every account that you determine is exempt from capital gains taxation.
+  For each, explain why in the reasoning — cite the specific exemption logic
+  (retirement wrapper, government scheme, foreign jurisdiction, etc.).
+
+  STEP 5 — DEDUCTION MECHANISM DETERMINATION
+  For every tax rule, determine where the deduction occurs:
+  - "account": tax reduces the balance directly (e.g., withholding at source)
+  - "cash_flow": tax is paid from general income, account compounds fully
+  This is critical for multi-decade projection accuracy.
+
+  STEP 6 — REGIME SUMMARY
+  Write a concise paragraph (tax_regime_summary) that captures:
+  - The overall tax philosophy of this jurisdiction
+  - Which accounts are covered and which are exempt
+  - Any important caveats or assumptions you made
+
+  STEP 7 — ZERO-RATE HANDLING
+  If any tax rate is 0.0 (the country does not tax certain or all gains),
+  still produce a rule entry with rate: 0.0 and explain the policy reason.
+  Never omit a zero-rate rule — the simulation engine needs to know it exists.
+
+  Return a TaxRulesConfig JSON object. Include your systematic reasoning.
+  {output_schema}

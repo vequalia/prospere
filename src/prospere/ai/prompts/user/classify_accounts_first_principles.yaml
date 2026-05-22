@@ -1,0 +1,32 @@
+description: "AI classification of financial accounts — first principles"
+template: |
+  Classify each financial account by its fundamental purpose and estimate its expected annual return.
+
+  AVAILABLE TYPES: {types}
+
+  --- FIRST PRINCIPLES ---
+  Do not rely on keyword lists or memorized account name patterns. For each account,
+  answer these fundamental questions:
+
+  1. PURPOSE: What financial role does this account play in the user's life?
+     - Does it represent OBLIGATION (credit/debt — negative balance)?
+     - Does it seek GROWTH (investment — market-linked, risk-bearing)?
+     - Does it PRESERVE value (savings — stable, purpose-held)?
+     - Does it FACILITATE transactions (cash — immediate liquidity)?
+
+  2. RETURN EXPECTATION: Based on the account's purpose, what is a reasonable
+     long-term annual return?
+     - Growth-oriented accounts: typically {invest_min}+, compensation for risk
+     - Preservation accounts: modest returns {savings_min}–{savings_max}
+     - Transaction accounts: near zero return
+
+  3. NAME SEMANTICS: What does the account name suggest about its purpose?
+     Interpret it in its likely cultural and linguistic context. An account
+     named in German, French, Chinese, or any language still serves one of
+     the four fundamental purposes above.
+
+  Reason from purpose to type, not from name to type.
+
+  --- ACCOUNTS ---
+  {accounts}
+  {output_schema}
